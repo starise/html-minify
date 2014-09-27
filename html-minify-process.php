@@ -20,7 +20,7 @@ class WP_HTML_Compression {
         return $this->html;
     }
     protected function bottomComment($raw, $compressed) {
-        $raw = strlen($raw);
+        $raw = strlen($raw) + strlen(html_minify_get_custom_header());
         $compressed = strlen($compressed);
         $savings = ($raw-$compressed) / $raw * 100;
         $savings = round($savings, 2);
@@ -86,6 +86,10 @@ class WP_HTML_Compression {
     }
     public function parseHTML($html) {
         $this->html = $this->minifyHTML($html);
+        if ( html_minify_get_custom_header() != '' ) {
+            preg_match("/<!DOCTYPE.*?\>/i", $this->html, $doctype);
+            $this->html = str_replace($doctype[0], $doctype[0] . "\n<!--\n" . html_minify_get_custom_header() . "\n-->\n", $this->html);
+        }
         $this->html .= "\n" . $this->bottomComment($html, $this->html);
     }
     protected function removeWhiteSpace($str) {

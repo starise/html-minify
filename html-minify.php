@@ -3,15 +3,18 @@
 /* ======================================================================
 
     Plugin Name: HTML Minify
-    Plugin URI: http://github.com/cferdinandi/html-minify
+    Plugin URI: http://github.com/starise/html-minify
     Description: Minify your HTML output in WordPress. Control what gets minified under <a href="options-general.php?page=html_minify_theme_options">Settings &rarr; HTML Minify</a>.
-    Version: 1.1
-    Author: Chris Ferdinandi
-    Author URI: http://gomakethings.com
+    Version: 1.2
+    Author: Andrea Brandi
+    Author URI: http://andreabrandi.com
     License: MIT
 
-    Forked from DVS.
+    Based on DVS.
     http://www.intert3chmedia.net/2011/12/minify-html-javascript-css-without.html
+
+    Forked from html-minify by Chris Ferdinandi
+    http://github.com/cferdinandi/html-minify
 
  * ====================================================================== */
 

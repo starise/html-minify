@@ -43,7 +43,15 @@ function html_minify_settings_field_ignore_comments() {
     <?php
 }
 
-
+function html_minify_settings_field_custom_header() {
+    $options = html_minify_get_theme_options();
+    ?>
+    <label for="custom-header">
+        <textarea style="font-family: monospace;" name="html_minify_theme_options[custom_header]" id="custom-header" rows="10" cols="80"><?php echo $options['custom_header']; ?></textarea><br>
+        <?php _e( 'Custom header shown after DOCTYPE tag', 'htmlmin' ); ?>
+    </label>
+    <?php
+}
 
 
 
@@ -79,6 +87,7 @@ function html_minify_theme_options_init() {
     add_settings_field( 'ignore_css', 'Ignore CSS', 'html_minify_settings_field_ignore_css', 'html_minify_theme_options', 'general' );
     add_settings_field( 'ignore_js', 'Ignore JS', 'html_minify_settings_field_ignore_js', 'html_minify_theme_options', 'general' );
     add_settings_field( 'ignore_comments', 'Ignore Comments', 'html_minify_settings_field_ignore_comments', 'html_minify_theme_options', 'general' );
+    add_settings_field( 'custom_header', 'Custom Header', 'html_minify_settings_field_custom_header', 'html_minify_theme_options', 'general' );
 }
 add_action( 'admin_init', 'html_minify_theme_options_init' );
 
@@ -148,6 +157,7 @@ function html_minify_get_theme_options() {
         'ignore_css' => 'off',
         'ignore_js' => 'off',
         'ignore_comments' => 'off',
+        'custom_header' => '',
     );
 
     $defaults = apply_filters( 'html_minify_default_theme_options', $defaults );
@@ -172,6 +182,9 @@ function html_minify_theme_options_validate( $input ) {
 
     if ( isset( $input['ignore_comments'] ) )
         $output['ignore_comments'] = 'on';
+
+    if ( isset( $input['custom_header'] ) )
+        $output['custom_header'] = $input['custom_header']; // skipping
 
     return apply_filters( 'html_minify_theme_options_validate', $output, $input );
 }
@@ -213,6 +226,11 @@ function html_minify_get_ignore_comments() {
         $setting = true;
     }
     return $setting;
+}
+
+function html_minify_get_custom_header() {
+    $options = html_minify_get_theme_options();
+    return $options['custom_header'];
 }
 
 ?>
